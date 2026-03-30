@@ -355,58 +355,241 @@
   /* PHOTOS */
   #photos { background: var(--light); }
 
-  .photo-grid {
+  /* CLIENT CARDS GRID */
+  .clients-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
     margin-top: 3rem;
   }
 
-  .photo-item {
-    aspect-ratio: 4/5;
-    background: var(--white);
-    border: 1px solid rgba(0,0,0,0.06);
+  .client-card {
     position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    background: var(--white);
+  }
+
+  .client-card-cover {
+    aspect-ratio: 3/4;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .client-card-cover img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+
+  .client-card:hover .client-card-cover img { transform: scale(1.05); }
+
+  .client-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(13,13,13,0);
+    transition: background 0.4s;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
-    transition: transform 0.3s ease;
   }
 
-  .photo-item:hover { transform: translateY(-4px); }
+  .client-card:hover .client-card-overlay { background: rgba(13,13,13,0.45); }
 
-  .photo-item.tall { grid-row: span 2; aspect-ratio: auto; min-height: 500px; }
+  .client-card-cta {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--white);
+    border: 1px solid rgba(248,247,244,0.7);
+    padding: 0.6rem 1.4rem;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.35s, transform 0.35s;
+  }
+
+  .client-card:hover .client-card-cta { opacity: 1; transform: translateY(0); }
+
+  .client-card-info {
+    padding: 1rem 0 0.5rem;
+  }
+
+  .client-card-name {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 300;
+    color: var(--black);
+    letter-spacing: 0.03em;
+    margin-bottom: 3px;
+  }
+
+  .client-card-meta {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray);
+  }
+
+  /* GALLERY VIEW */
+  .gallery-view {
+    display: none;
+  }
+
+  .gallery-view.active {
+    display: block;
+  }
+
+  .gallery-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gray);
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-family: var(--font-body);
+    padding: 0;
+    margin-bottom: 2rem;
+    transition: color 0.2s;
+  }
+
+  .gallery-back:hover { color: var(--black); }
+  .gallery-back svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; }
+
+  .gallery-header { margin-bottom: 2rem; }
+
+  .gallery-title {
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    font-weight: 300;
+    color: var(--black);
+    margin-bottom: 4px;
+  }
+
+  .gallery-count {
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gray);
+  }
+
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+  }
+
+  .photo-item {
+    aspect-ratio: 4/5;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    background: var(--white);
+  }
 
   .photo-item img {
     position: absolute;
     inset: 0;
-    width: 100%;
-    height: 100%;
+    width: 100%; height: 100%;
     object-fit: cover;
     transition: transform 0.5s ease;
   }
 
-  .photo-item:hover img { transform: scale(1.04); }
+  .photo-item:hover img { transform: scale(1.05); }
 
-  .photo-icon {
-    font-family: var(--font-display);
-    font-size: 4rem;
-    color: rgba(0,0,0,0.07);
+  .photo-hover-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(13,13,13,0);
+    transition: background 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .photo-item:hover .photo-hover-overlay { background: rgba(13,13,13,0.3); }
+
+  .photo-zoom-icon {
+    width: 40px; height: 40px;
+    border: 1px solid rgba(248,247,244,0.8);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.3s, transform 0.3s;
+  }
+
+  .photo-item:hover .photo-zoom-icon { opacity: 1; transform: scale(1); }
+  .photo-zoom-icon svg { width: 16px; height: 16px; fill: none; stroke: #f8f7f4; stroke-width: 2; }
+
+  /* LIGHTBOX */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10,10,10,0.97);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lightbox.open { display: flex; }
+
+  .lightbox-img {
+    max-width: 88vw;
+    max-height: 88vh;
+    object-fit: contain;
     user-select: none;
   }
 
-  .photo-label {
-    position: absolute;
-    bottom: 1rem; left: 1rem;
-    font-size: 0.68rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--gray);
-    z-index: 1;
-    background: rgba(248,247,244,0.85);
-    padding: 2px 8px;
-    border-radius: 2px;
+  .lightbox-close {
+    position: fixed;
+    top: 1.5rem; right: 2rem;
+    font-size: 1.8rem;
+    color: rgba(248,247,244,0.5);
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-family: var(--font-body);
+    line-height: 1;
+    transition: color 0.2s;
+  }
+
+  .lightbox-close:hover { color: var(--white); }
+
+  .lightbox-arrow {
+    position: fixed;
+    top: 50%; transform: translateY(-50%);
+    background: none; border: none;
+    cursor: pointer; padding: 1rem;
+    opacity: 0.4; transition: opacity 0.2s;
+  }
+
+  .lightbox-arrow:hover { opacity: 1; }
+  .lightbox-arrow.prev { left: 1.5rem; }
+  .lightbox-arrow.next { right: 1.5rem; }
+  .lightbox-arrow svg { width: 28px; height: 28px; fill: none; stroke: #f8f7f4; stroke-width: 1.5; }
+
+  .lightbox-counter {
+    position: fixed;
+    bottom: 1.5rem; left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    color: rgba(248,247,244,0.35);
+  }
+
+  .lightbox-client-name {
+    position: fixed;
+    top: 1.8rem; left: 2rem;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 300;
+    color: rgba(248,247,244,0.4);
+    letter-spacing: 0.06em;
   }
 
   /* CONTACT */
@@ -671,25 +854,53 @@
 <!-- PHOTOS -->
 <section id="photos">
   <p class="section-label fade-up">Photography</p>
-  <h2 class="section-title fade-up">Studio<br>portraits.</h2>
-  <div class="photo-grid">
-    <div class="photo-item tall fade-up">
-      <img src="https://i.imgur.com/L5z44Fp.jpg" alt="Studio Portrait" loading="lazy">
-    </div>
-    <div class="photo-item fade-up" style="transition-delay:0.1s">
-      <img src="https://i.imgur.com/fmyo1LV.jpg" alt="Studio Portrait" loading="lazy">
-    </div>
-    <div class="photo-item fade-up" style="transition-delay:0.2s">
-      <img src="https://i.imgur.com/ekhOdOk.jpg" alt="Studio Portrait" loading="lazy">
-    </div>
-    <div class="photo-item fade-up" style="transition-delay:0.1s">
-      <img src="https://i.imgur.com/VPtKfPv.jpg" alt="Studio Portrait" loading="lazy">
-    </div>
-    <div class="photo-item fade-up" style="transition-delay:0.2s">
-      <img src="https://i.imgur.com/qK3Cvjk.jpg" alt="Studio Portrait" loading="lazy">
+  <h2 class="section-title fade-up">Client<br>Sessions.</h2>
+
+  <!-- CLIENT CARDS VIEW -->
+  <div id="clients-view">
+    <div class="clients-grid">
+      <div class="client-card fade-up" onclick="openGallery('kairos')">
+        <div class="client-card-cover">
+          <img src="https://i.imgur.com/FAoIGwM.jpg" alt="Kairos Activewear" loading="lazy">
+          <div class="client-card-overlay">
+            <span class="client-card-cta">View Gallery</span>
+          </div>
+        </div>
+        <div class="client-card-info">
+          <p class="client-card-name">Kairos Activewear</p>
+          <p class="client-card-meta">Fashion Editorial &nbsp;·&nbsp; 10 photos</p>
+        </div>
+      </div>
     </div>
   </div>
+
+  <!-- GALLERY VIEW -->
+  <div id="gallery-view" class="gallery-view">
+    <button class="gallery-back" onclick="closeGallery()">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      All Sessions
+    </button>
+    <div class="gallery-header">
+      <h3 class="gallery-title" id="gallery-title"></h3>
+      <p class="gallery-count" id="gallery-count"></p>
+    </div>
+    <div class="photo-grid" id="gallery-grid"></div>
+  </div>
 </section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightboxOutside(event)">
+  <span class="lightbox-client-name" id="lightbox-client-name"></span>
+  <button class="lightbox-close" onclick="closeLightbox()">&#215;</button>
+  <button class="lightbox-arrow prev" onclick="prevPhoto(event)">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <img class="lightbox-img" id="lightbox-img" src="" alt="">
+  <button class="lightbox-arrow next" onclick="nextPhoto(event)">
+    <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
+  <div class="lightbox-counter" id="lightbox-counter"></div>
+</div>
 
 <!-- CONTACT -->
 <section id="contact">
@@ -747,6 +958,102 @@
   }, { threshold: 0.1 });
 
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  const clients = {
+    kairos: {
+      name: 'Kairos Activewear',
+      type: 'Fashion Editorial',
+      photos: [
+        'https://i.imgur.com/Wce7UrX.jpg',
+        'https://i.imgur.com/jt7ul9D.jpg',
+        'https://i.imgur.com/tfthds5.jpg',
+        'https://i.imgur.com/BXSDi88.jpg',
+        'https://i.imgur.com/WPlRoBa.jpg',
+        'https://i.imgur.com/n8Krmet.jpg',
+        'https://i.imgur.com/QkUlmSb.jpg',
+        'https://i.imgur.com/QFPGu2G.jpg',
+        'https://i.imgur.com/FAoIGwM.jpg',
+        'https://i.imgur.com/t4ocRP2.jpg'
+      ]
+    }
+  };
+
+  let currentClient = '';
+  let currentIndex = 0;
+
+  function openGallery(clientId) {
+    const client = clients[clientId];
+    currentClient = clientId;
+    document.getElementById('clients-view').style.display = 'none';
+    const gv = document.getElementById('gallery-view');
+    gv.classList.add('active');
+    document.getElementById('gallery-title').textContent = client.name;
+    document.getElementById('gallery-count').textContent = client.type + ' · ' + client.photos.length + ' photos';
+    const grid = document.getElementById('gallery-grid');
+    grid.innerHTML = '';
+    client.photos.forEach(function(src, i) {
+      const item = document.createElement('div');
+      item.className = 'photo-item';
+      item.onclick = function() { openLightbox(clientId, i); };
+      item.innerHTML = '<img src="' + src + '" alt="' + client.name + '" loading="lazy">' +
+        '<div class="photo-hover-overlay"><div class="photo-zoom-icon">' +
+        '<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>' +
+        '</div></div>';
+      grid.appendChild(item);
+    });
+    window.scrollTo({ top: document.getElementById('photos').offsetTop - 80, behavior: 'smooth' });
+  }
+
+  function closeGallery() {
+    document.getElementById('gallery-view').classList.remove('active');
+    document.getElementById('clients-view').style.display = 'block';
+  }
+
+  function openLightbox(clientId, index) {
+    currentClient = clientId;
+    currentIndex = index;
+    updateLightbox();
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function updateLightbox() {
+    const client = clients[currentClient];
+    document.getElementById('lightbox-img').src = client.photos[currentIndex];
+    document.getElementById('lightbox-client-name').textContent = client.name;
+    document.getElementById('lightbox-counter').textContent = (currentIndex + 1) + ' / ' + client.photos.length;
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function closeLightboxOutside(e) {
+    if (e.target === document.getElementById('lightbox')) closeLightbox();
+  }
+
+  function prevPhoto(e) {
+    e.stopPropagation();
+    const photos = clients[currentClient].photos;
+    currentIndex = (currentIndex - 1 + photos.length) % photos.length;
+    updateLightbox();
+  }
+
+  function nextPhoto(e) {
+    e.stopPropagation();
+    const photos = clients[currentClient].photos;
+    currentIndex = (currentIndex + 1) % photos.length;
+    updateLightbox();
+  }
+
+  document.addEventListener('keydown', function(e) {
+    const lb = document.getElementById('lightbox');
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'ArrowLeft') prevPhoto(e);
+    if (e.key === 'ArrowRight') nextPhoto(e);
+    if (e.key === 'Escape') closeLightbox();
+  });
 
   const form = document.getElementById('contact-form');
   if (form) {
